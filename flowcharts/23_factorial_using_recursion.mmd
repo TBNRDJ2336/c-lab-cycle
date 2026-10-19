@@ -1,0 +1,7 @@
+flowchart TD
+S([Start])-->I[/"Read n"/]-->C["f = fact(n)"]-->O[/"Print f"/]-->E
+F(["fact(n)"])-->D{"n <= 1 ?"}
+D-->|Yes|R1(["return 1"])
+D-->|No|R2(["return n * fact(n-1)"])
+R2-.->|"recursive call"|F
+E([Stop])

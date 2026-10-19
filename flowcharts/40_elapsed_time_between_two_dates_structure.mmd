@@ -1,0 +1,8 @@
+flowchart TD
+S([Start])-->I[/"Read date d1 (earlier), d2 (later)"/]-->D1{"d2.d < d1.d ?"}
+D1-->|Yes|A["d2.d += daysIn(d1.m, d1.y)<br/>d2.m--"]-->D2{"d2.m < d1.m ?"}
+D1-->|No|D2
+D2-->|Yes|B["d2.m += 12<br/>d2.y--"]-->C
+D2-->|No|C["r.d = d2.d - d1.d<br/>r.m = d2.m - d1.m<br/>r.y = d2.y - d1.y"]
+C-->O[/"Print r.y years, r.m months, r.d days"/]-->E
+E([Stop])

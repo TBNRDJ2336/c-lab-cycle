@@ -1,0 +1,7 @@
+flowchart TD
+S([Start])-->I[/"Read vertices A, B, C, D"/]-->A["Find squared lengths:<br/>AB, BC, CD, DA, AC, BD"]-->D1{"AB==CD and BC==DA<br/>and AC==BD ?"}
+D1-->|No|X[/"Neither"/]-->E
+D1-->|Yes|D2{"AB == BC ?"}
+D2-->|Yes|Y[/"Square"/]-->E
+D2-->|No|Z[/"Rectangle"/]-->E
+E([Stop])

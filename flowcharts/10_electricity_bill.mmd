@@ -1,0 +1,10 @@
+flowchart TD
+S([Start])-->I[/"Read cno, units"/]-->D1{"units <= 200 ?"}
+D1-->|Yes|A["amt = 0.50*units"]-->O
+D1-->|No|D2{"units <= 400 ?"}
+D2-->|Yes|B["amt = 100 + 0.65*(units-200)"]-->O
+D2-->|No|D3{"units <= 600 ?"}
+D3-->|Yes|C["amt = 230 + 0.80*(units-400)"]-->O
+D3-->|No|F["amt = 390 + 1.00*(units-600)"]-->O
+O[/"Print cno, amt"/]-->E
+E([Stop])

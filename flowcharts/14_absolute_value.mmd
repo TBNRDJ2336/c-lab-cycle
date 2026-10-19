@@ -1,0 +1,6 @@
+flowchart TD
+S([Start])-->I[/"Read n"/]-->D{"n < 0 ?"}
+D-->|Yes|A["n = -n"]-->O
+D-->|No|O[/"Print n"/]
+O-->E
+E([Stop])

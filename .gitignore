@@ -1,0 +1,17 @@
+# Compiled C binaries and common build outputs
+*.exe
+*.out
+*.o
+*.obj
+build/
+out/
+
+# IDE and editor metadata
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS metadata
+.DS_Store
+Thumbs.db

@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read n and array a"/]-->A["p = a, sum = 0, i = 0"]-->D{"i < n ?"}
+D-->|Yes|B["sum = sum + *(p + i)<br/>i++"]-->D
+D-->|No|O[/"Print sum"/]-->E
+E([Stop])

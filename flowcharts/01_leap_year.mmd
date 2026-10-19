@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read y"/]-->D{"(y%4==0 and y%100!=0) or y%400==0 ?"}
+D-->|Yes|A[/"Print: leap year"/]-->E
+D-->|No|B[/"Print: not a leap year"/]-->E
+E([Stop])

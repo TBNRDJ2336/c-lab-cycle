@@ -1,0 +1,14 @@
+flowchart TD
+S([Start])-->I[/"Read marks"/]-->D1{"marks >= 90 ?"}
+D1-->|Yes|G1["grade = A+"]-->O
+D1-->|No|D2{"marks >= 80 ?"}
+D2-->|Yes|G2["grade = A"]-->O
+D2-->|No|D3{"marks >= 70 ?"}
+D3-->|Yes|G3["grade = B"]-->O
+D3-->|No|D4{"marks >= 60 ?"}
+D4-->|Yes|G4["grade = C"]-->O
+D4-->|No|D5{"marks >= 50 ?"}
+D5-->|Yes|G5["grade = D"]-->O
+D5-->|No|G6["grade = F"]-->O
+O[/"Print grade"/]-->E
+E([Stop])

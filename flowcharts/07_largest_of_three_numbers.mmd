@@ -1,0 +1,7 @@
+flowchart TD
+S([Start])-->I[/"Read a, b, c"/]-->D1{"a>=b and a>=c ?"}
+D1-->|Yes|X[/"Print a"/]-->E
+D1-->|No|D2{"b >= c ?"}
+D2-->|Yes|Y[/"Print b"/]-->E
+D2-->|No|Z[/"Print c"/]-->E
+E([Stop])

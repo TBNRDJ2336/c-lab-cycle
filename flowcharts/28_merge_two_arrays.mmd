@@ -1,0 +1,7 @@
+flowchart TD
+S([Start])-->I[/"Read n, a and m, b"/]-->A["k = 0, i = 0"]-->D1{"i < n ?"}
+D1-->|Yes|B["c[k++] = a[i]<br/>i++"]-->D1
+D1-->|No|C["i = 0"]-->D2{"i < m ?"}
+D2-->|Yes|F["c[k++] = b[i]<br/>i++"]-->D2
+D2-->|No|O[/"Print c (k elements)"/]-->E
+E([Stop])

@@ -1,0 +1,11 @@
+flowchart TD
+S([Start])-->I[/"Read a, op, b"/]-->S1{"switch op"}
+S1-->|"+"|A["r = a + b"]-->O
+S1-->|"-"|B["r = a - b"]-->O
+S1-->|"*"|C["r = a * b"]-->O
+S1-->|"/"|D{"b != 0 ?"}
+D-->|Yes|F["r = a / b"]-->O
+D-->|No|Z[/"Division by zero"/]-->E
+S1-->|other|X[/"Invalid operator"/]-->E
+O[/"Print r"/]-->E
+E([Stop])

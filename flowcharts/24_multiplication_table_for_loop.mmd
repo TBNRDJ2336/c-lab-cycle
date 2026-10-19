@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read n"/]-->A["i = 1"]-->D{"i <= 10 ?"}
+D-->|Yes|O[/"Print n x i = n*i"/]-->B["i++"]-->D
+D-->|No|E
+E([Stop])

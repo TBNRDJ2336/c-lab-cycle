@@ -1,0 +1,7 @@
+flowchart TD
+S([Start])-->I[/"Read n"/]-->A["i = 0"]-->D1{"i < n ?"}
+D1-->|Yes|R[/"Read a[i]"/]-->B["i++"]-->D1
+D1-->|No|C["i = 0"]-->D2{"i < n ?"}
+D2-->|Yes|O[/"Print a[i]"/]-->F["i++"]-->D2
+D2-->|No|E
+E([Stop])

@@ -1,0 +1,7 @@
+flowchart TD
+S([Start])-->I[/"Read n"/]-->A["temp = n, rev = 0"]-->D{"temp > 0 ?"}
+D-->|Yes|B["rev = rev*10 + temp % 10<br/>temp = temp / 10"]-->D
+D-->|No|C{"rev == n ?"}
+C-->|Yes|X[/"Palindrome"/]-->E
+C-->|No|Y[/"Not a palindrome"/]-->E
+E([Stop])

@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read age"/]-->D{"age >= 18 ?"}
+D-->|Yes|A[/"Eligible for voting"/]-->E
+D-->|No|B[/"Not eligible"/]-->E
+E([Stop])

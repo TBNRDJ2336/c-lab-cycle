@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read a"/]-->A["byValue(a)"]-->O1[/"Print a (unchanged)"/]-->B["byRef(&a)"]-->O2[/"Print a (changed by 10)"/]-->E
+V(["byValue(x)"])-->V1["x = x + 10<br/>(works on a copy)"]
+R(["byRef(*x)"])-->R1["*x = *x + 10<br/>(changes the original)"]
+E([Stop])

@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read n, array a"/]-->A["i = n - 1"]-->D{"i >= 0 ?"}
+D-->|Yes|O[/"Print a[i]"/]-->B["i--"]-->D
+D-->|No|E
+E([Stop])

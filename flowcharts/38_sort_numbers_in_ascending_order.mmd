@@ -1,0 +1,10 @@
+flowchart TD
+S([Start])-->I[/"Read n, array a"/]-->A["i = 0"]-->D1{"i < n - 1 ?"}
+D1-->|Yes|B["j = 0"]-->D2{"j < n - i - 1 ?"}
+D2-->|Yes|D3{"a[j] > a[j+1] ?"}
+D3-->|Yes|W["swap a[j], a[j+1]"]-->K["j++"]
+D3-->|No|K
+K-->D2
+D2-->|No|F["i++"]-->D1
+D1-->|No|O[/"Print sorted array"/]-->E
+E([Stop])

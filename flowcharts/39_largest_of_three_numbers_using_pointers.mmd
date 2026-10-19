@@ -1,0 +1,7 @@
+flowchart TD
+S([Start])-->I[/"Read a, b, c<br/>pa = &a, pb = &b, pc = &c"/]-->D1{"*pa >= *pb and *pa >= *pc ?"}
+D1-->|Yes|X[/"Print *pa"/]-->E
+D1-->|No|D2{"*pb >= *pc ?"}
+D2-->|Yes|Y[/"Print *pb"/]-->E
+D2-->|No|Z[/"Print *pc"/]-->E
+E([Stop])

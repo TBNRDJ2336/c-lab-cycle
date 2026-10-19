@@ -1,0 +1,11 @@
+flowchart TD
+S([Start])-->I[/"Read n"/]-->A["count = 0, num = 2"]-->D{"count < n ?"}
+D-->|No|E
+D-->|Yes|B["isPrime = 1, i = 2"]-->L{"i*i <= num ?"}
+L-->|Yes|M{"num % i == 0 ?"}
+M-->|Yes|N["isPrime = 0"]-->Q
+M-->|No|R["i++"]-->L
+L-->|No|Q{"isPrime == 1 ?"}
+Q-->|Yes|U[/"Print num"/]-->V["count++"]-->W["num++"]-->D
+Q-->|No|W
+E([Stop])

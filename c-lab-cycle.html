@@ -1,0 +1,955 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>C Programming Lab Cycle – Code &amp; Flowcharts</title>
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1b2030;--mut:#5d6580;--line:#dde1ee;--acc:#3b5bdb;--accbg:#e8edff;--code:#101626;--codeink:#e6ebff;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1220;--card:#181c2e;--ink:#e8ebf7;--mut:#9aa3c4;--line:#2a3050;--acc:#8ea2ff;--accbg:#242b52;--code:#0a0d19;--codeink:#e6ebff;color-scheme:dark}}
+*{box-sizing:border-box;scrollbar-width:thin;scrollbar-color:var(--mut) transparent}
+*::-webkit-scrollbar{width:8px;height:8px}
+*::-webkit-scrollbar-track{background:transparent}
+*::-webkit-scrollbar-thumb{background:var(--mut);border-radius:8px;border:2px solid transparent;background-clip:padding-box;opacity:.6}
+*::-webkit-scrollbar-thumb:hover{background:var(--acc);background-clip:padding-box}
+*::-webkit-scrollbar-corner{background:transparent}
+html,body{margin:0;background:var(--bg);color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{padding:20px 20px 8px}
+h1{margin:0;font-size:1.35rem}
+header p{margin:4px 0 0;color:var(--mut);font-size:.9rem}
+.wrap{display:grid;grid-template-columns:230px 1fr;gap:16px;padding:12px 20px 28px;max-width:1200px;margin:0 auto}
+nav{display:flex;flex-direction:column;gap:4px;max-height:80vh;overflow-y:auto;position:sticky;top:12px;align-self:start}
+nav button{text-align:left;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:8px 10px;border-radius:8px;cursor:pointer;font-size:.88rem}
+nav button.on{background:var(--accbg);border-color:var(--acc);color:var(--acc);font-weight:600}
+main{min-width:0}
+.card{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:14px}
+.card h2{margin:0 0 10px;font-size:1rem;display:flex;justify-content:space-between;align-items:center;gap:8px}
+pre.c{margin:0;background:var(--code);color:var(--codeink);padding:14px;border-radius:8px;overflow-x:auto;font:13px/1.55 ui-monospace,Menlo,Consolas,monospace}
+.cp{border:1px solid var(--acc);background:transparent;color:var(--acc);border-radius:6px;padding:4px 10px;cursor:pointer;font-size:.8rem}
+#fc{overflow-x:auto;text-align:center}
+#fc svg{max-width:100%;height:auto}
+.pn{display:flex;gap:8px}
+.pn button{flex:1;padding:9px;border-radius:8px;border:1px solid var(--line);background:var(--card);color:var(--ink);cursor:pointer}
+@media (max-width:760px){.wrap{grid-template-columns:1fr}nav{flex-direction:row;max-height:none;overflow-x:auto;position:static}nav button{white-space:nowrap}}
+</style>
+</head>
+<body>
+<header>
+<h1>C Programming Lab Cycle – BCA (Honours)</h1>
+<p>Programs 1–40 · pick a program to see its code and flowchart</p>
+</header>
+<div class="wrap">
+<nav id="nav"></nav>
+<main>
+<div class="card"><h2><span id="ttl"></span><button class="cp" id="cp">Copy code</button></h2><pre class="c"><code id="code"></code></pre></div>
+<div class="card"><h2>Flowchart</h2><div id="fc"></div></div>
+<div class="pn"><button id="pv">← Previous</button><button id="nx">Next →</button></div>
+</main>
+</div>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@10.9.3/dist/mermaid.min.js"></script>
+<script>
+const P=[];const p=(t,c,f)=>P.push({t,c:c.trim(),f:f.trim()});
+
+p("1. Leap year",String.raw`
+#include <stdio.h>
+int main() {
+    int y;
+    printf("Enter year: ");
+    scanf("%d", &y);
+    if ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0)
+        printf("%d is a leap year\n", y);
+    else
+        printf("%d is not a leap year\n", y);
+    return 0;
+}`,String.raw`
+I[/"Read y"/]-->D{"(y%4==0 and y%100!=0) or y%400==0 ?"}
+D-->|Yes|A[/"Print: leap year"/]-->E
+D-->|No|B[/"Print: not a leap year"/]-->E`);
+
+p("2. Odd or even",String.raw`
+#include <stdio.h>
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    if (n % 2 == 0)
+        printf("%d is even\n", n);
+    else
+        printf("%d is odd\n", n);
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->D{"n % 2 == 0 ?"}
+D-->|Yes|A[/"Print: Even"/]-->E
+D-->|No|B[/"Print: Odd"/]-->E`);
+
+p("3. Voting eligibility",String.raw`
+#include <stdio.h>
+int main() {
+    int age;
+    printf("Enter age: ");
+    scanf("%d", &age);
+    if (age >= 18)
+        printf("Eligible for voting\n");
+    else
+        printf("Not eligible for voting\n");
+    return 0;
+}`,String.raw`
+I[/"Read age"/]-->D{"age >= 18 ?"}
+D-->|Yes|A[/"Eligible for voting"/]-->E
+D-->|No|B[/"Not eligible"/]-->E`);
+
+p("4. Reverse a three-digit number",String.raw`
+#include <stdio.h>
+int main() {
+    int n, a, b, c, rev;
+    printf("Enter a 3-digit number: ");
+    scanf("%d", &n);
+    a = n / 100;
+    b = (n / 10) % 10;
+    c = n % 10;
+    rev = c * 100 + b * 10 + a;
+    printf("Reverse = %d\n", rev);
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["a = n / 100<br/>b = (n / 10) % 10<br/>c = n % 10"]-->B["rev = c*100 + b*10 + a"]-->O[/"Print rev"/]-->E`);
+
+p("5. Area of circle; area and perimeter of rectangle",String.raw`
+#include <stdio.h>
+#define PI 3.14159
+int main() {
+    float r, l, b;
+    printf("Enter radius: ");
+    scanf("%f", &r);
+    printf("Area of circle = %.2f\n", PI * r * r);
+    printf("Enter length and breadth: ");
+    scanf("%f %f", &l, &b);
+    printf("Area = %.2f\n", l * b);
+    printf("Perimeter = %.2f\n", 2 * (l + b));
+    return 0;
+}`,String.raw`
+I[/"Read r"/]-->A["area = PI * r * r"]-->O1[/"Print circle area"/]-->J[/"Read l, b"/]-->B["area = l * b<br/>perimeter = 2 * (l + b)"]-->O2[/"Print area, perimeter"/]-->E`);
+
+p("6. Simple interest",String.raw`
+#include <stdio.h>
+int main() {
+    float p, r, t, si;
+    printf("Enter principal, rate, time: ");
+    scanf("%f %f %f", &p, &r, &t);
+    si = p * r * t / 100;
+    printf("Simple interest = %.2f\n", si);
+    return 0;
+}`,String.raw`
+I[/"Read p, r, t"/]-->A["si = p * r * t / 100"]-->O[/"Print si"/]-->E`);
+
+p("7. Largest of three numbers",String.raw`
+#include <stdio.h>
+int main() {
+    int a, b, c;
+    printf("Enter three numbers: ");
+    scanf("%d %d %d", &a, &b, &c);
+    if (a >= b && a >= c)
+        printf("Largest = %d\n", a);
+    else if (b >= c)
+        printf("Largest = %d\n", b);
+    else
+        printf("Largest = %d\n", c);
+    return 0;
+}`,String.raw`
+I[/"Read a, b, c"/]-->D1{"a>=b and a>=c ?"}
+D1-->|Yes|X[/"Print a"/]-->E
+D1-->|No|D2{"b >= c ?"}
+D2-->|Yes|Y[/"Print b"/]-->E
+D2-->|No|Z[/"Print c"/]-->E`);
+
+p("8. Negative of a number",String.raw`
+#include <stdio.h>
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    printf("Negative = %d\n", -n);
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["neg = -n"]-->O[/"Print neg"/]-->E`);
+
+p("9. Sum of digits",String.raw`
+#include <stdio.h>
+int main() {
+    int n, sum = 0;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    while (n > 0) {
+        sum += n % 10;
+        n /= 10;
+    }
+    printf("Sum of digits = %d\n", sum);
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["sum = 0"]-->D{"n > 0 ?"}
+D-->|Yes|B["sum = sum + n % 10<br/>n = n / 10"]-->D
+D-->|No|O[/"Print sum"/]-->E`);
+
+p("10. Electricity bill",String.raw`
+#include <stdio.h>
+int main() {
+    int cno, units;
+    float amt;
+    printf("Enter customer number and units: ");
+    scanf("%d %d", &cno, &units);
+    if (units <= 200)
+        amt = 0.50 * units;
+    else if (units <= 400)
+        amt = 100 + 0.65 * (units - 200);
+    else if (units <= 600)
+        amt = 230 + 0.80 * (units - 400);
+    else
+        amt = 390 + 1.00 * (units - 600);
+    printf("Customer %d, amount = Rs. %.2f\n", cno, amt);
+    return 0;
+}`,String.raw`
+I[/"Read cno, units"/]-->D1{"units <= 200 ?"}
+D1-->|Yes|A["amt = 0.50*units"]-->O
+D1-->|No|D2{"units <= 400 ?"}
+D2-->|Yes|B["amt = 100 + 0.65*(units-200)"]-->O
+D2-->|No|D3{"units <= 600 ?"}
+D3-->|Yes|C["amt = 230 + 0.80*(units-400)"]-->O
+D3-->|No|F["amt = 390 + 1.00*(units-600)"]-->O
+O[/"Print cno, amt"/]-->E`);
+
+p("11. Swap two numbers",String.raw`
+#include <stdio.h>
+int main() {
+    int a, b, temp;
+    printf("Enter two numbers: ");
+    scanf("%d %d", &a, &b);
+    temp = a;
+    a = b;
+    b = temp;
+    printf("After swap: a = %d, b = %d\n", a, b);
+    return 0;
+}`,String.raw`
+I[/"Read a, b"/]-->A["temp = a<br/>a = b<br/>b = temp"]-->O[/"Print a, b"/]-->E`);
+
+p("12. Grading of a student",String.raw`
+#include <stdio.h>
+int main() {
+    int m;
+    printf("Enter marks (0-100): ");
+    scanf("%d", &m);
+    if (m >= 90)      printf("Grade A+\n");
+    else if (m >= 80) printf("Grade A\n");
+    else if (m >= 70) printf("Grade B\n");
+    else if (m >= 60) printf("Grade C\n");
+    else if (m >= 50) printf("Grade D\n");
+    else              printf("Grade F (Fail)\n");
+    return 0;
+}`,String.raw`
+I[/"Read marks"/]-->D1{"marks >= 90 ?"}
+D1-->|Yes|G1["grade = A+"]-->O
+D1-->|No|D2{"marks >= 80 ?"}
+D2-->|Yes|G2["grade = A"]-->O
+D2-->|No|D3{"marks >= 70 ?"}
+D3-->|Yes|G3["grade = B"]-->O
+D3-->|No|D4{"marks >= 60 ?"}
+D4-->|Yes|G4["grade = C"]-->O
+D4-->|No|D5{"marks >= 50 ?"}
+D5-->|Yes|G5["grade = D"]-->O
+D5-->|No|G6["grade = F"]-->O
+O[/"Print grade"/]-->E`);
+
+p("13. Smallest of three numbers",String.raw`
+#include <stdio.h>
+int main() {
+    int a, b, c;
+    printf("Enter three numbers: ");
+    scanf("%d %d %d", &a, &b, &c);
+    if (a <= b && a <= c)
+        printf("Smallest = %d\n", a);
+    else if (b <= c)
+        printf("Smallest = %d\n", b);
+    else
+        printf("Smallest = %d\n", c);
+    return 0;
+}`,String.raw`
+I[/"Read a, b, c"/]-->D1{"a<=b and a<=c ?"}
+D1-->|Yes|X[/"Print a"/]-->E
+D1-->|No|D2{"b <= c ?"}
+D2-->|Yes|Y[/"Print b"/]-->E
+D2-->|No|Z[/"Print c"/]-->E`);
+
+p("14. Absolute value",String.raw`
+#include <stdio.h>
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    if (n < 0)
+        n = -n;
+    printf("Absolute value = %d\n", n);
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->D{"n < 0 ?"}
+D-->|Yes|A["n = -n"]-->O
+D-->|No|O[/"Print n"/]
+O-->E`);
+
+p("15. Roots of a quadratic equation",String.raw`
+#include <stdio.h>
+#include <math.h>   /* compile with: gcc file.c -lm */
+int main() {
+    float a, b, c, d, r1, r2;
+    printf("Enter a, b, c: ");
+    scanf("%f %f %f", &a, &b, &c);
+    d = b * b - 4 * a * c;
+    if (d > 0) {
+        r1 = (-b + sqrt(d)) / (2 * a);
+        r2 = (-b - sqrt(d)) / (2 * a);
+        printf("Real and distinct roots: %.2f, %.2f\n", r1, r2);
+    } else if (d == 0) {
+        r1 = -b / (2 * a);
+        printf("Real and equal roots: %.2f\n", r1);
+    } else {
+        printf("Complex roots: %.2f + %.2fi, %.2f - %.2fi\n",
+               -b / (2 * a), sqrt(-d) / (2 * a),
+               -b / (2 * a), sqrt(-d) / (2 * a));
+    }
+    return 0;
+}`,String.raw`
+I[/"Read a, b, c"/]-->A["d = b*b - 4*a*c"]-->D1{"d > 0 ?"}
+D1-->|Yes|X["r1, r2 = (-b +/- sqrt(d)) / 2a"]-->O1[/"Print real distinct roots"/]-->E
+D1-->|No|D2{"d == 0 ?"}
+D2-->|Yes|Y["r = -b / 2a"]-->O2[/"Print equal roots"/]-->E
+D2-->|No|Z["re = -b/2a<br/>im = sqrt(-d)/2a"]-->O3[/"Print complex roots"/]-->E`);
+
+p("16. Palindrome number",String.raw`
+#include <stdio.h>
+int main() {
+    int n, temp, rev = 0;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    temp = n;
+    while (temp > 0) {
+        rev = rev * 10 + temp % 10;
+        temp /= 10;
+    }
+    if (rev == n)
+        printf("%d is a palindrome\n", n);
+    else
+        printf("%d is not a palindrome\n", n);
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["temp = n, rev = 0"]-->D{"temp > 0 ?"}
+D-->|Yes|B["rev = rev*10 + temp % 10<br/>temp = temp / 10"]-->D
+D-->|No|C{"rev == n ?"}
+C-->|Yes|X[/"Palindrome"/]-->E
+C-->|No|Y[/"Not a palindrome"/]-->E`);
+
+p("17. Floyd's triangle",String.raw`
+#include <stdio.h>
+int main() {
+    int n, i, j, k = 1;
+    printf("Enter number of rows: ");
+    scanf("%d", &n);
+    for (i = 1; i <= n; i++) {
+        for (j = 1; j <= i; j++)
+            printf("%d\t", k++);
+        printf("\n");
+    }
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["k = 1, i = 1"]-->D1{"i <= n ?"}
+D1-->|Yes|B["j = 1"]-->D2{"j <= i ?"}
+D2-->|Yes|C[/"Print k"/]-->F["k++, j++"]-->D2
+D2-->|No|G["Print newline, i++"]-->D1
+D1-->|No|E`);
+
+p("18. Arithmetic operations using switch",String.raw`
+#include <stdio.h>
+int main() {
+    float a, b;
+    char op;
+    printf("Enter expression (a op b): ");
+    scanf("%f %c %f", &a, &op, &b);
+    switch (op) {
+        case '+': printf("Result = %.2f\n", a + b); break;
+        case '-': printf("Result = %.2f\n", a - b); break;
+        case '*': printf("Result = %.2f\n", a * b); break;
+        case '/':
+            if (b != 0) printf("Result = %.2f\n", a / b);
+            else        printf("Division by zero!\n");
+            break;
+        default: printf("Invalid operator\n");
+    }
+    return 0;
+}`,String.raw`
+I[/"Read a, op, b"/]-->S1{"switch op"}
+S1-->|"+"|A["r = a + b"]-->O
+S1-->|"-"|B["r = a - b"]-->O
+S1-->|"*"|C["r = a * b"]-->O
+S1-->|"/"|D{"b != 0 ?"}
+D-->|Yes|F["r = a / b"]-->O
+D-->|No|Z[/"Division by zero"/]-->E
+S1-->|other|X[/"Invalid operator"/]-->E
+O[/"Print r"/]-->E`);
+
+p("19. First n prime numbers",String.raw`
+#include <stdio.h>
+int main() {
+    int n, count = 0, num = 2, i, isPrime;
+    printf("How many primes? ");
+    scanf("%d", &n);
+    while (count < n) {
+        isPrime = 1;
+        for (i = 2; i * i <= num; i++) {
+            if (num % i == 0) { isPrime = 0; break; }
+        }
+        if (isPrime) {
+            printf("%d ", num);
+            count++;
+        }
+        num++;
+    }
+    printf("\n");
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["count = 0, num = 2"]-->D{"count < n ?"}
+D-->|No|E
+D-->|Yes|B["isPrime = 1, i = 2"]-->L{"i*i <= num ?"}
+L-->|Yes|M{"num % i == 0 ?"}
+M-->|Yes|N["isPrime = 0"]-->Q
+M-->|No|R["i++"]-->L
+L-->|No|Q{"isPrime == 1 ?"}
+Q-->|Yes|U[/"Print num"/]-->V["count++"]-->W["num++"]-->D
+Q-->|No|W`);
+
+p("20. Fibonacci series using while",String.raw`
+#include <stdio.h>
+int main() {
+    int n, a = 0, b = 1, c, i = 1;
+    printf("How many terms? ");
+    scanf("%d", &n);
+    while (i <= n) {
+        printf("%d ", a);
+        c = a + b;
+        a = b;
+        b = c;
+        i++;
+    }
+    printf("\n");
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["a = 0, b = 1, i = 1"]-->D{"i <= n ?"}
+D-->|Yes|O[/"Print a"/]-->B["c = a + b<br/>a = b<br/>b = c<br/>i++"]-->D
+D-->|No|E`);
+
+p("21. Display n numbers using do-while",String.raw`
+#include <stdio.h>
+int main() {
+    int n, i = 1;
+    printf("Enter n: ");
+    scanf("%d", &n);
+    do {
+        printf("%d ", i);
+        i++;
+    } while (i <= n);
+    printf("\n");
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["i = 1"]-->O[/"Print i"/]-->B["i++"]-->D{"i <= n ?"}
+D-->|Yes|O
+D-->|No|E`);
+
+p("22. Factorial of a number",String.raw`
+#include <stdio.h>
+int main() {
+    int n, i;
+    unsigned long fact = 1;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    for (i = 1; i <= n; i++)
+        fact *= i;
+    printf("Factorial = %lu\n", fact);
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["fact = 1, i = 1"]-->D{"i <= n ?"}
+D-->|Yes|B["fact = fact * i<br/>i++"]-->D
+D-->|No|O[/"Print fact"/]-->E`);
+
+p("23. Factorial using recursion",String.raw`
+#include <stdio.h>
+long fact(int n) {
+    if (n <= 1)
+        return 1;
+    return n * fact(n - 1);
+}
+int main() {
+    int n;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    printf("Factorial = %ld\n", fact(n));
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->C["f = fact(n)"]-->O[/"Print f"/]-->E
+F(["fact(n)"])-->D{"n <= 1 ?"}
+D-->|Yes|R1(["return 1"])
+D-->|No|R2(["return n * fact(n-1)"])
+R2-.->|"recursive call"|F`);
+
+p("24. Multiplication table (for loop)",String.raw`
+#include <stdio.h>
+int main() {
+    int n, i;
+    printf("Enter a number: ");
+    scanf("%d", &n);
+    for (i = 1; i <= 10; i++)
+        printf("%d x %d = %d\n", n, i, n * i);
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["i = 1"]-->D{"i <= 10 ?"}
+D-->|Yes|O[/"Print n x i = n*i"/]-->B["i++"]-->D
+D-->|No|E`);
+
+p("25. Sum of elements using pointers",String.raw`
+#include <stdio.h>
+int main() {
+    int a[50], n, i, sum = 0, *p;
+    printf("Enter size: ");
+    scanf("%d", &n);
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+    p = a;
+    for (i = 0; i < n; i++)
+        sum += *(p + i);
+    printf("Sum = %d\n", sum);
+    return 0;
+}`,String.raw`
+I[/"Read n and array a"/]-->A["p = a, sum = 0, i = 0"]-->D{"i < n ?"}
+D-->|Yes|B["sum = sum + *(p + i)<br/>i++"]-->D
+D-->|No|O[/"Print sum"/]-->E`);
+
+p("26. Display elements of an array",String.raw`
+#include <stdio.h>
+int main() {
+    int a[50], n, i;
+    printf("Enter size: ");
+    scanf("%d", &n);
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+    printf("Array elements: ");
+    for (i = 0; i < n; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}`,String.raw`
+I[/"Read n"/]-->A["i = 0"]-->D1{"i < n ?"}
+D1-->|Yes|R[/"Read a[i]"/]-->B["i++"]-->D1
+D1-->|No|C["i = 0"]-->D2{"i < n ?"}
+D2-->|Yes|O[/"Print a[i]"/]-->F["i++"]-->D2
+D2-->|No|E`);
+
+p("27. Insert an element in an array",String.raw`
+#include <stdio.h>
+int main() {
+    int a[50], n, i, pos, x;
+    printf("Enter size: ");
+    scanf("%d", &n);
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+    printf("Enter position (1-%d) and element: ", n + 1);
+    scanf("%d %d", &pos, &x);
+    for (i = n - 1; i >= pos - 1; i--)
+        a[i + 1] = a[i];
+    a[pos - 1] = x;
+    n++;
+    printf("New array: ");
+    for (i = 0; i < n; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}`,String.raw`
+I[/"Read n, array a"/]-->J[/"Read pos, x"/]-->A["i = n - 1"]-->D{"i >= pos - 1 ?"}
+D-->|Yes|B["a[i+1] = a[i]<br/>i--"]-->D
+D-->|No|C["a[pos-1] = x<br/>n++"]-->O[/"Print array a"/]-->E`);
+
+p("28. Merge two arrays",String.raw`
+#include <stdio.h>
+int main() {
+    int a[50], b[50], c[100], n, m, i, k = 0;
+    printf("Size of first array: ");
+    scanf("%d", &n);
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+    printf("Size of second array: ");
+    scanf("%d", &m);
+    for (i = 0; i < m; i++)
+        scanf("%d", &b[i]);
+    for (i = 0; i < n; i++)
+        c[k++] = a[i];
+    for (i = 0; i < m; i++)
+        c[k++] = b[i];
+    printf("Merged array: ");
+    for (i = 0; i < k; i++)
+        printf("%d ", c[i]);
+    printf("\n");
+    return 0;
+}`,String.raw`
+I[/"Read n, a and m, b"/]-->A["k = 0, i = 0"]-->D1{"i < n ?"}
+D1-->|Yes|B["c[k++] = a[i]<br/>i++"]-->D1
+D1-->|No|C["i = 0"]-->D2{"i < m ?"}
+D2-->|Yes|F["c[k++] = b[i]<br/>i++"]-->D2
+D2-->|No|O[/"Print c (k elements)"/]-->E`);
+
+p("29. Sum of two matrices",String.raw`
+#include <stdio.h>
+int main() {
+    int a[10][10], b[10][10], r, c, i, j;
+    printf("Enter rows and columns: ");
+    scanf("%d %d", &r, &c);
+    printf("Enter first matrix:\n");
+    for (i = 0; i < r; i++)
+        for (j = 0; j < c; j++)
+            scanf("%d", &a[i][j]);
+    printf("Enter second matrix:\n");
+    for (i = 0; i < r; i++)
+        for (j = 0; j < c; j++)
+            scanf("%d", &b[i][j]);
+    printf("Sum:\n");
+    for (i = 0; i < r; i++) {
+        for (j = 0; j < c; j++)
+            printf("%d\t", a[i][j] + b[i][j]);
+        printf("\n");
+    }
+    return 0;
+}`,String.raw`
+I[/"Read r, c, matrices A and B"/]-->A["i = 0"]-->D1{"i < r ?"}
+D1-->|Yes|B["j = 0"]-->D2{"j < c ?"}
+D2-->|Yes|O[/"Print A[i][j] + B[i][j]"/]-->F["j++"]-->D2
+D2-->|No|G["Print newline<br/>i++"]-->D1
+D1-->|No|E`);
+
+p("30. Product of two matrices",String.raw`
+#include <stdio.h>
+int main() {
+    int a[10][10], b[10][10], p[10][10];
+    int r1, c1, r2, c2, i, j, k;
+    printf("Order of first matrix: ");
+    scanf("%d %d", &r1, &c1);
+    printf("Order of second matrix: ");
+    scanf("%d %d", &r2, &c2);
+    if (c1 != r2) {
+        printf("Multiplication not possible\n");
+        return 0;
+    }
+    printf("Enter first matrix:\n");
+    for (i = 0; i < r1; i++)
+        for (j = 0; j < c1; j++)
+            scanf("%d", &a[i][j]);
+    printf("Enter second matrix:\n");
+    for (i = 0; i < r2; i++)
+        for (j = 0; j < c2; j++)
+            scanf("%d", &b[i][j]);
+    printf("Product:\n");
+    for (i = 0; i < r1; i++) {
+        for (j = 0; j < c2; j++) {
+            p[i][j] = 0;
+            for (k = 0; k < c1; k++)
+                p[i][j] += a[i][k] * b[k][j];
+            printf("%d\t", p[i][j]);
+        }
+        printf("\n");
+    }
+    return 0;
+}`,String.raw`
+I[/"Read r1, c1, r2, c2"/]-->Q{"c1 == r2 ?"}
+Q-->|No|X[/"Not possible"/]-->E
+Q-->|Yes|R[/"Read matrices A and B"/]-->A["i = 0"]-->D1{"i < r1 ?"}
+D1-->|Yes|B["j = 0"]-->D2{"j < c2 ?"}
+D2-->|Yes|C["p[i][j] = 0, k = 0"]-->D3{"k < c1 ?"}
+D3-->|Yes|F["p[i][j] += a[i][k] * b[k][j]<br/>k++"]-->D3
+D3-->|No|O[/"Print p[i][j]"/]-->G["j++"]-->D2
+D2-->|No|H["Print newline<br/>i++"]-->D1
+D1-->|No|E`);
+
+p("31. Transpose of a matrix",String.raw`
+#include <stdio.h>
+int main() {
+    int a[10][10], t[10][10], r, c, i, j;
+    printf("Enter rows and columns: ");
+    scanf("%d %d", &r, &c);
+    printf("Enter matrix:\n");
+    for (i = 0; i < r; i++)
+        for (j = 0; j < c; j++)
+            scanf("%d", &a[i][j]);
+    for (i = 0; i < r; i++)
+        for (j = 0; j < c; j++)
+            t[j][i] = a[i][j];
+    printf("Transpose:\n");
+    for (i = 0; i < c; i++) {
+        for (j = 0; j < r; j++)
+            printf("%d\t", t[i][j]);
+        printf("\n");
+    }
+    return 0;
+}`,String.raw`
+I[/"Read r, c, matrix A"/]-->A["i = 0"]-->D1{"i < r ?"}
+D1-->|Yes|B["j = 0"]-->D2{"j < c ?"}
+D2-->|Yes|C["t[j][i] = a[i][j]<br/>j++"]-->D2
+D2-->|No|F["i++"]-->D1
+D1-->|No|O[/"Print matrix T (c x r)"/]-->E`);
+
+p("32. Read details about a book",String.raw`
+#include <stdio.h>
+struct Book {
+    char title[50];
+    char author[50];
+    float price;
+    int pages;
+};
+int main() {
+    struct Book b;
+    printf("Title: ");
+    scanf(" %[^\n]", b.title);
+    printf("Author: ");
+    scanf(" %[^\n]", b.author);
+    printf("Price: ");
+    scanf("%f", &b.price);
+    printf("Pages: ");
+    scanf("%d", &b.pages);
+    printf("\nTitle: %s\nAuthor: %s\nPrice: %.2f\nPages: %d\n",
+           b.title, b.author, b.price, b.pages);
+    return 0;
+}`,String.raw`
+I[/"Read title, author"/]-->J[/"Read price, pages"/]-->O[/"Print book details"/]-->E`);
+
+p("33. Read student details",String.raw`
+#include <stdio.h>
+struct Student {
+    int roll;
+    char name[50];
+    float m[3];
+};
+int main() {
+    struct Student s;
+    float total;
+    printf("Roll number: ");
+    scanf("%d", &s.roll);
+    printf("Name: ");
+    scanf(" %[^\n]", s.name);
+    printf("Marks in 3 subjects: ");
+    scanf("%f %f %f", &s.m[0], &s.m[1], &s.m[2]);
+    total = s.m[0] + s.m[1] + s.m[2];
+    printf("\nRoll: %d\nName: %s\n", s.roll, s.name);
+    printf("Total: %.2f\nAverage: %.2f\n", total, total / 3);
+    return 0;
+}`,String.raw`
+I[/"Read roll, name, marks m[0..2]"/]-->A["total = m[0] + m[1] + m[2]<br/>average = total / 3"]-->O[/"Print roll, name, total, average"/]-->E`);
+
+p("34. Volume and surface area of a cylinder (functions)",String.raw`
+#include <stdio.h>
+#define PI 3.14159
+float volume(float r, float h) {
+    return PI * r * r * h;
+}
+float surface(float r, float h) {
+    return 2 * PI * r * (r + h);
+}
+int main() {
+    float r, h;
+    printf("Enter radius and height: ");
+    scanf("%f %f", &r, &h);
+    printf("Volume = %.2f\n", volume(r, h));
+    printf("Surface area = %.2f\n", surface(r, h));
+    return 0;
+}`,String.raw`
+I[/"Read r, h"/]-->A["v = volume(r, h)"]-->B["s = surface(r, h)"]-->O[/"Print v, s"/]-->E
+F1(["volume(r, h)"])-->G1(["return PI*r*r*h"])
+F2(["surface(r, h)"])-->G2(["return 2*PI*r*(r+h)"])`);
+
+p("35. Accept array values and display in reverse",String.raw`
+#include <stdio.h>
+int main() {
+    int a[50], n, i;
+    printf("Enter size: ");
+    scanf("%d", &n);
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+    printf("Reverse order: ");
+    for (i = n - 1; i >= 0; i--)
+        printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}`,String.raw`
+I[/"Read n, array a"/]-->A["i = n - 1"]-->D{"i >= 0 ?"}
+D-->|Yes|O[/"Print a[i]"/]-->B["i--"]-->D
+D-->|No|E`);
+
+p("36. Call by value and call by reference",String.raw`
+#include <stdio.h>
+void byValue(int x) {
+    x = x + 10;
+    printf("Inside byValue: x = %d\n", x);
+}
+void byRef(int *x) {
+    *x = *x + 10;
+    printf("Inside byRef: x = %d\n", *x);
+}
+int main() {
+    int a;
+    printf("Enter a number: ");
+    scanf("%d", &a);
+    byValue(a);
+    printf("After byValue: a = %d\n", a);
+    byRef(&a);
+    printf("After byRef: a = %d\n", a);
+    return 0;
+}`,String.raw`
+I[/"Read a"/]-->A["byValue(a)"]-->O1[/"Print a (unchanged)"/]-->B["byRef(&a)"]-->O2[/"Print a (changed by 10)"/]-->E
+V(["byValue(x)"])-->V1["x = x + 10<br/>(works on a copy)"]
+R(["byRef(*x)"])-->R1["*x = *x + 10<br/>(changes the original)"]`);
+
+p("37. Square or rectangle from four vertices",String.raw`
+#include <stdio.h>
+/* squared distance between vertex i and vertex j */
+#define SQ(i, j) ((long)(x[i]-x[j])*(x[i]-x[j]) + (long)(y[i]-y[j])*(y[i]-y[j]))
+int main() {
+    int x[4], y[4], i;
+    long ab, bc, cd, da, ac, bd;
+    printf("Enter 4 vertices in order (x y):\n");
+    for (i = 0; i < 4; i++)
+        scanf("%d %d", &x[i], &y[i]);
+    ab = SQ(0, 1); bc = SQ(1, 2);
+    cd = SQ(2, 3); da = SQ(3, 0);
+    ac = SQ(0, 2); bd = SQ(1, 3);
+    if (ab == cd && bc == da && ac == bd) {
+        if (ab == bc)
+            printf("Square\n");
+        else
+            printf("Rectangle\n");
+    } else
+        printf("Neither square nor rectangle\n");
+    return 0;
+}`,String.raw`
+I[/"Read vertices A, B, C, D"/]-->A["Find squared lengths:<br/>AB, BC, CD, DA, AC, BD"]-->D1{"AB==CD and BC==DA<br/>and AC==BD ?"}
+D1-->|No|X[/"Neither"/]-->E
+D1-->|Yes|D2{"AB == BC ?"}
+D2-->|Yes|Y[/"Square"/]-->E
+D2-->|No|Z[/"Rectangle"/]-->E`);
+
+p("38. Sort numbers in ascending order",String.raw`
+#include <stdio.h>
+int main() {
+    int a[50], n, i, j, t;
+    printf("Enter size: ");
+    scanf("%d", &n);
+    printf("Enter elements: ");
+    for (i = 0; i < n; i++)
+        scanf("%d", &a[i]);
+    for (i = 0; i < n - 1; i++) {
+        for (j = 0; j < n - i - 1; j++) {
+            if (a[j] > a[j + 1]) {
+                t = a[j];
+                a[j] = a[j + 1];
+                a[j + 1] = t;
+            }
+        }
+    }
+    printf("Sorted: ");
+    for (i = 0; i < n; i++)
+        printf("%d ", a[i]);
+    printf("\n");
+    return 0;
+}`,String.raw`
+I[/"Read n, array a"/]-->A["i = 0"]-->D1{"i < n - 1 ?"}
+D1-->|Yes|B["j = 0"]-->D2{"j < n - i - 1 ?"}
+D2-->|Yes|D3{"a[j] > a[j+1] ?"}
+D3-->|Yes|W["swap a[j], a[j+1]"]-->K["j++"]
+D3-->|No|K
+K-->D2
+D2-->|No|F["i++"]-->D1
+D1-->|No|O[/"Print sorted array"/]-->E`);
+
+p("39. Largest of three numbers using pointers",String.raw`
+#include <stdio.h>
+int main() {
+    int a, b, c;
+    int *pa = &a, *pb = &b, *pc = &c;
+    printf("Enter three numbers: ");
+    scanf("%d %d %d", pa, pb, pc);
+    if (*pa >= *pb && *pa >= *pc)
+        printf("Largest = %d\n", *pa);
+    else if (*pb >= *pc)
+        printf("Largest = %d\n", *pb);
+    else
+        printf("Largest = %d\n", *pc);
+    return 0;
+}`,String.raw`
+I[/"Read a, b, c<br/>pa = &a, pb = &b, pc = &c"/]-->D1{"*pa >= *pb and *pa >= *pc ?"}
+D1-->|Yes|X[/"Print *pa"/]-->E
+D1-->|No|D2{"*pb >= *pc ?"}
+D2-->|Yes|Y[/"Print *pb"/]-->E
+D2-->|No|Z[/"Print *pc"/]-->E`);
+
+p("40. Elapsed time between two dates (structures)",String.raw`
+#include <stdio.h>
+struct Date { int d, m, y; };
+int daysIn(int m, int y) {
+    int days[] = {31,28,31,30,31,30,31,31,30,31,30,31};
+    if (m == 2 && ((y % 4 == 0 && y % 100 != 0) || y % 400 == 0))
+        return 29;
+    return days[m - 1];
+}
+int main() {
+    struct Date d1, d2, r;
+    printf("Earlier date (DD/MM/YYYY): ");
+    scanf("%d/%d/%d", &d1.d, &d1.m, &d1.y);
+    printf("Later date (DD/MM/YYYY): ");
+    scanf("%d/%d/%d", &d2.d, &d2.m, &d2.y);
+    if (d2.d < d1.d) {
+        d2.d += daysIn(d1.m, d1.y);
+        d2.m--;
+    }
+    if (d2.m < d1.m) {
+        d2.m += 12;
+        d2.y--;
+    }
+    r.d = d2.d - d1.d;
+    r.m = d2.m - d1.m;
+    r.y = d2.y - d1.y;
+    printf("Elapsed: %d years, %d months, %d days\n", r.y, r.m, r.d);
+    return 0;
+}`,String.raw`
+I[/"Read date d1 (earlier), d2 (later)"/]-->D1{"d2.d < d1.d ?"}
+D1-->|Yes|A["d2.d += daysIn(d1.m, d1.y)<br/>d2.m--"]-->D2{"d2.m < d1.m ?"}
+D1-->|No|D2
+D2-->|Yes|B["d2.m += 12<br/>d2.y--"]-->C
+D2-->|No|C["r.d = d2.d - d1.d<br/>r.m = d2.m - d1.m<br/>r.y = d2.y - d1.y"]
+C-->O[/"Print r.y years, r.m months, r.d days"/]-->E`);
+
+const $=id=>document.getElementById(id);
+const dark=matchMedia("(prefers-color-scheme: dark)").matches;
+mermaid.initialize({startOnLoad:false,theme:dark?"dark":"default",securityLevel:"loose",flowchart:{curve:"basis",htmlLabels:true}});
+let cur=0,tok=0;
+const nav=$("nav");
+P.forEach((x,i)=>{const b=document.createElement("button");b.textContent=x.t;b.onclick=()=>show(i);nav.appendChild(b)});
+async function show(i){
+  cur=i;const x=P[i],t=++tok;
+  [...nav.children].forEach((b,j)=>b.classList.toggle("on",j===i));
+  $("ttl").textContent=x.t;$("code").textContent=x.c;
+  $("fc").innerHTML="<em>Drawing flowchart…</em>";
+  const src="flowchart TD\nS([Start])-->"+x.f+"\nE([Stop])";
+  try{
+    const r=await mermaid.render("g"+t,src);
+    if(t===tok)$("fc").innerHTML=r.svg;
+  }catch(e){if(t===tok)$("fc").textContent="Could not draw this flowchart.";}
+}
+$("cp").onclick=async()=>{try{await navigator.clipboard.writeText(P[cur].c);$("cp").textContent="Copied ✓"}catch(e){$("cp").textContent="Select & copy manually"}setTimeout(()=>$("cp").textContent="Copy code",1500)};
+$("pv").onclick=()=>show((cur+P.length-1)%P.length);
+$("nx").onclick=()=>show((cur+1)%P.length);
+show(0);
+</script>
+</body>
+</html>

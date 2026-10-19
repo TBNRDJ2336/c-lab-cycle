@@ -1,0 +1,11 @@
+flowchart TD
+S([Start])-->I[/"Read r1, c1, r2, c2"/]-->Q{"c1 == r2 ?"}
+Q-->|No|X[/"Not possible"/]-->E
+Q-->|Yes|R[/"Read matrices A and B"/]-->A["i = 0"]-->D1{"i < r1 ?"}
+D1-->|Yes|B["j = 0"]-->D2{"j < c2 ?"}
+D2-->|Yes|C["p[i][j] = 0, k = 0"]-->D3{"k < c1 ?"}
+D3-->|Yes|F["p[i][j] += a[i][k] * b[k][j]<br/>k++"]-->D3
+D3-->|No|O[/"Print p[i][j]"/]-->G["j++"]-->D2
+D2-->|No|H["Print newline<br/>i++"]-->D1
+D1-->|No|E
+E([Stop])

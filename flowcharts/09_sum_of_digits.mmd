@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read n"/]-->A["sum = 0"]-->D{"n > 0 ?"}
+D-->|Yes|B["sum = sum + n % 10<br/>n = n / 10"]-->D
+D-->|No|O[/"Print sum"/]-->E
+E([Stop])

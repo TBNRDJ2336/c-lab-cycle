@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read r, h"/]-->A["v = volume(r, h)"]-->B["s = surface(r, h)"]-->O[/"Print v, s"/]-->E
+F1(["volume(r, h)"])-->G1(["return PI*r*r*h"])
+F2(["surface(r, h)"])-->G2(["return 2*PI*r*(r+h)"])
+E([Stop])

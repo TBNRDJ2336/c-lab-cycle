@@ -1,0 +1,5 @@
+flowchart TD
+S([Start])-->I[/"Read n"/]-->D{"n % 2 == 0 ?"}
+D-->|Yes|A[/"Print: Even"/]-->E
+D-->|No|B[/"Print: Odd"/]-->E
+E([Stop])
